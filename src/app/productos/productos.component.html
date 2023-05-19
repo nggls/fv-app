@@ -1,0 +1,37 @@
+<div class="card border-success mb-3">
+  <div class="card-header">Productos</div>
+  <div class="card-body text-success">
+  <h5 class="card-title">Listado Productos</h5>
+
+  <div class="my-2 text-left">
+    <button *ngIf="authService.hasRole('ADMIN') || authService.hasRole('PRODUCER')" class="btn btn-rounded btn-primary" type="button" [routerLink] = "['/productos/form/']"
+    >Crear Producto</button>
+  </div>
+  <div *ngIf="productos?.length == 0" class="alert alert-info">
+    No hay registros en la base de datos
+  </div>
+      <table class="table table-bordered table-striped" *ngIf="productos?.length>0">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Fecha de Creacion</th>
+            <th *ngIf="authService.hasRole('ADMIN')  || authService.hasRole('PRODUCER')">Editar</th>
+            <th *ngIf="authService.hasRole('ADMIN')  || authService.hasRole('PRODUCER')">Eliminar</th>
+          </tr>
+        </thead>
+          <tr *ngFor="let producto of productos">
+            <td>{{ producto.id }}</td>
+            <td>{{ producto.nombre}}</td>
+            <td>{{ producto.precio}}</td>
+            <td>{{ producto.createAt}}</td>
+            <td *ngIf="authService.hasRole('ADMIN') || authService.hasRole('PRODUCER')" >
+              <button type="button" name="button" [routerLink]="['/productos/form/', producto.id]" class="btn btn-primary">Editar</button>
+            </td>
+            <td *ngIf="authService.hasRole('ADMIN') || authService.hasRole('PRODUCER')" >
+            <button type="button" name="eliminar" (click)='delete(producto)' class="btn btn-danger btn-m">Eliminar</button>
+            </td>
+    </table>
+    </div>
+  </div>

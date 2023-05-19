@@ -1,0 +1,75 @@
+<div class="card bg-light">
+  <div class="card-header text-dark">{{titulo}}: {{pedido.descripcion}}</div>
+  <div class="card-body">
+    <h4 class="card-title">
+      <a [routerLink]="['/clientes']" class="btn btn-light btn-xs">&laquo; volver</a>
+    </h4>
+
+    <form #pedidoForm="ngForm">
+      <div class="form-group row" *ngIf="pedido.cliente">
+        <label for="cliente" class="col-sm-2 text-dark col-form-label">Cliente</label>
+        <div class="col-sm-6">
+          <input type="text" name="cliente" value="{{pedido.cliente.nombre}} {{pedido.cliente.apellido}}" class="form-control" disabled>
+        </div>
+      </div>
+
+      <div class="form-group row">
+            <label for="descripcion" class="col-sm-2 text-dark  col-form-label">Direccion</label>
+            <div class="col-sm-6">
+              <input type="text" name="descripcion" [(ngModel)]="pedido.descripcion" class="form-control" required #descripcion="ngModel">
+              <div class="alert alert-danger" *ngIf="descripcion.invalid && descripcion.touched || descripcion.invalid && pedidoForm.submitted">
+                La descripción es requerida.
+              </div>
+            </div>
+          </div>
+      <div class="form-group row">
+        <label for="observacion" class="col-sm-2 text-dark col-form-label">Detalle Pedido</label>
+        <div class="col-sm-6">
+          <textarea name="observacion" [(ngModel)]="pedido.observacion" class="form-control"></textarea>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-sm-6 text-dark">
+          <mat-form-field>
+            <input type="text" placeholder="Añadir producto" aria-label="Productos" matInput [formControl]="autocompleteControl" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="mostrarNombre" (optionSelected)="seleccionarProducto($event)">
+              <mat-option *ngFor="let producto of productosFiltrados | async" [value]="producto">
+                {{producto.nombre}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <div class="alert alert-danger" *ngIf="autocompleteControl.invalid && pedidoForm.submitted">
+            El pedido no puede no tener productos!.
+          </div>
+        </div>
+      </div>
+      <div class="alert alert-info my-4" *ngIf="pedido.items.length == 0">
+        No hay productos asignados para el pedido. Debe agregar al menos 1!
+      </div>
+      <table class="table table-striped table-hover table-sm" *ngIf="pedido.items.length > 0">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Precio</th>
+            <th>Kilogramos</th>
+            <th>Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of pedido.items">
+            <td>{{item.producto.nombre}}</td>
+            <td>{{item.producto.precio}}</td>
+            <td><input type="number" value="{{item.kilogramos}}" class="form-control col-sm-4" (change)="actualizarKilogramos(item.producto.id, $event)"></td>
+            <td><button class="btn btn-danger btn-sm" type="button" (click)="eliminarItemPedido(item.producto.id)">X</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="form-group row">
+        <div class="col-sm-6">
+          <input type="submit" (click)="create(pedidoForm)" value="Realizar Pedido" class="btn btn-secondary">
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

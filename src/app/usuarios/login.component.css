@@ -1,0 +1,21 @@
+.div-login{
+  background-color: #676B70;
+  margin-top: 25px;
+  color: white;
+  border: 0px;
+  border-radius: 25px;
+}
+
+.btn-login:hover{
+  background-color: #CCCECF;
+  color: #343A40;
+}
+.btn-login{
+  background-color: #4D5358;
+  border: #4D5358;
+}
+
+.icon-svg{
+  width: 250px;
+  height: 250px;
+}

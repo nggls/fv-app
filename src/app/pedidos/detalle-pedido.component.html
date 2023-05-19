@@ -1,0 +1,53 @@
+<div class="card bg-light" *ngIf="pedido">
+  <div class="card text-dark">{{titulo}}: {{pedido.descripcion}}</div>
+  <div class="card-body text-dark">
+    <h4 class="card-title">
+      <a [routerLink]="['/clientes']" class="btn btn-light btn-xs">&laquo; volver</a>
+    </h4>
+
+    <ul class="list-group text-white my-2">
+      <li class="list-group-item list-group-item-primary">Datos del cliente</li>
+      <li class="list-group-item text-dark">{{pedido.cliente.nombre}}</li>
+      <li class="list-group-item text-dark">{{pedido.cliente.apellido}}</li>
+    </ul>
+
+    <ul class="list-group my-2">
+      <li class="list-group-item list-group-item-primary">Datos del Pedido</li>
+      <li class="list-group-item text-dark">Folio: {{pedido.id}}</li>
+      <li class="list-group-item text-dark">Descripcion: {{pedido.descripcion}}</li>
+      <li class="list-group-item text-dark">Fecha: {{pedido.createAt}}</li>
+    </ul>
+
+    <table class="table table-striped table-hover table-bordered my-3">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Precio</th>
+          <th>Kilogramos</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of pedido.items">
+          <td>{{item.producto.nombre}}</td>
+          <td>{{item.producto.precio}}</td>
+          <td>{{item.kilogramos}}</td>
+          <td>{{item.importe}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 class="float-right">
+      <span>Gran Total</span>: <span class="badge badge-secondary">{{pedido.total}}</span>
+    </h5>
+
+    <div class="card text-white bg-dark mb-2" style="max-width: 350px;">
+      <div class="card card-header">
+        
+      </div>
+      <div class="card card-body text-dark">
+        <p *ngIf="!pedido.observacion">No tiene observación</p>
+        <p *ngIf="pedido.observacion">{{pedido.observacion}}</p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+<div class="card border-success mb-3">
+  <div class="card-header">Usuarios</div>
+  <div class="card-body text-success">
+  <h5 class="card-title">Listado Usuarios</h5>
+
+  <div class="my-2 text-left">
+    <button *ngIf="authService.hasRole('ADMIN')" class="btn btn-rounded btn-primary" type="button" [routerLink] = "['/usuarios/form']"
+    >Crear Usuario</button>
+  </div>
+  <div *ngIf="usuarios?.length == 0" class="alert alert-info">
+    No hay registros en la base de datos
+  </div>
+      <table class="table table-bordered table-striped" *ngIf="usuarios?.length>0">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Username</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Email</th>
+            <th>Telefono</th>
+            <th *ngIf="authService.hasRole('ADMIN')">Editar</th>
+            <th *ngIf="authService.hasRole('ADMIN')">Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let usuario of usuarios">
+            <td>{{ usuario.id}}</td>
+            <td>{{ usuario.username}}</td>
+            <td>{{ usuario.nombre}}</td>
+            <td>{{ usuario.apellido}}</td>
+            <td>{{ usuario.email}}</td>
+            <td>{{ usuario.telefono}}</td>
+            <td *ngIf="authService.hasRole('ADMIN')" >
+              <button type="button" name="button" [routerLink]="['/usuarios/form',usuario.id]" class="btn btn-primary">Editar</button>
+            </td>
+            <td *ngIf="authService.hasRole('ADMIN')" >
+            <button type="button" name="eliminar" (click)='deleteUsuario(usuario)' class="btn btn-danger btn-m">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

@@ -1,0 +1,47 @@
+<ul class="alert alert-danger" *ngIf="errores?.length > 0">
+    <li *ngFor="let err of errores">
+        {{ err }}
+    </li>
+</ul>
+<div class="card bg-dark text-white">
+    <div class="card-header">{{ titulo }} </div>
+    <div class="card-body">
+
+        <form #productoForm="ngForm">
+            <div class="form-group row">
+                <label for="nombre" class="col-from-label col-sm-2">Nombre</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" [(ngModel)]="producto.nombre" name="nombre"
+                        #nombre="ngModel"> <!-- required minlength="4" -->
+                    <div class="alert alert-danger col-s-6" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+                        <div *ngIf="nombre.errors.required">
+                            Nombre es obligatorio.
+                        </div>
+                        <div *ngIf="nombre.errors.minlength">
+                            Nombre debe tener al menos 4 caracteres.
+                        </div>
+                    </div>
+                </div>
+            </div> <br>
+            <div class="form-group row">
+                <label for="apellido" class="col-from-label col-sm-2">Precio</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" [(ngModel)]="producto.precio" name="precio"
+                        #precio="ngModel"> <!-- required -->
+                </div>
+            </div> <br>
+            <div class="form=group row">
+                <div class="col-sm-6">
+                    <button class="btn btn-primary" role="button" (click)='createProducto()' *ngIf="!producto.id else elseBlock"
+                        [disabled]='!productoForm.valid'>Crear Producto</button>
+
+                    <ng-template #elseBlock>
+                        <button class="btn btn-primary" role="button" (click)='updateProducto()'
+                            [disabled]='!productoForm.valid'>Editar Producto</button>
+                    </ng-template>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="row center-xs">
+	<div class="">
+
+	</div>
+
+</div>
+
+<div class="card border-primary div-login">
+	<div class="row center-xs">
+		<div class="col-xs-6">
+			<div class="card-header">{{titulo}}</div>
+
+		</div>
+	</div>
+	<div class="card-body row center-xs">
+		<div class="col-xs-8">
+			<form method="post">
+
+				<div class="form-group col-sm-12">
+					<input [(ngModel)]="usuario.username" type="text" class="form-control" name="username" id="username"
+						placeholder="Username" autofocus required>
+				</div>
+				<br>
+				<div class="form-group col-sm-12">
+					<input [(ngModel)]="usuario.password" type="password" class="form-control" name="password" id="password"
+						placeholder="Password" required>
+				</div>
+				<br>
+				<div class="row center-xs">
+					<div class="form-group col-sm-6">
+						<input (click)='login()' type="submit" class="btn btn-lg btn-secondary btn-block btn-login"
+							value="Login">
+					</div>
+
+				</div>
+			</form>
+		</div>
+
+	</div>
+</div>
